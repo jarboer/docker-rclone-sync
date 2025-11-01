@@ -66,6 +66,7 @@ I set up a custom app by following: https://dfederm.com/backing-up-truenas-scale
 #### My setup is as follows:
 
 Repository: `ghcr.io/jarboer/docker-rclone-sync`
+
 Tag: `latest`
 
 Environment Variables:
