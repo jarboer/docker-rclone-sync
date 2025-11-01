@@ -1,5 +1,8 @@
 # docker-rclone
-# Creds to bcardiff for the work for this docker container (this is a forked version)
+
+Creds to bcardiff for the work for this docker container (this is a forked version)
+
+---
 
 Docker image to perform a [rclone](http://rclone.org) sync based on a cron schedule, with [healthchecks.io](https://healthchecks.io) monitoring.
 
@@ -55,3 +58,38 @@ $ docker run --rm -it -v $(pwd)/config:/config -v /path/to/source:/source -e SYN
 ```
 
 See [rclone sync docs](https://rclone.org/commands/rclone_sync/) for source/dest syntax and additional options.
+
+### TrueNAS
+
+I set up a custom app by following: https://dfederm.com/backing-up-truenas-scale-to-onedrive/
+
+#### My setup is as follows:
+
+Repository: `ghcr.io/jarboer/docker-rclone-sync`
+Tag: `latest`
+
+Environment Variables:
+ * `SYNC_SRC`=`/rclone-data`
+ * `SYNC_DEST`=`ssd-storage-crypt:`
+ * `CRON`=`25 1 * * *`
+ * `CRON_ABORT`=`0 6 * * *`
+ * `FORCE_SYNC`=`0`
+ * `SYNC_OPTS`=`-MPl --create-empty-src-dirs --log-level NOTICE --log-file /config/ssd-storage-report.log --transfers=4`
+
+Restart Policy: `No - Does not restart the container under any circumstances.`
+
+Storage:
+ 1. Config
+     1. Type: `Host Path (Path that already exists on the system)`
+     2. Read Only: `false`
+     3. Mount Path: `/config`
+     4. Enable ACL: `false`
+     5. Host Path: `/mnt/ssd-storage/appdata/rclone`
+ 2. Source
+     1. Type: `Host Path (Path that already exists on the system)`
+     2. Read Only: `true`
+     3. Mount Path: `/rclone-data`
+     4. Enable ACL: `false`
+     5. Host Path: `/mnt/ssd-storage/appdata`
+
+
