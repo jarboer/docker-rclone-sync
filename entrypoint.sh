@@ -47,9 +47,10 @@ else
     echo "INFO: Starting crond ..."
     touch /tmp/sync.log
     touch /tmp/crond.log
+    # Run tail in the background (using `&`)
+    tail -F /tmp/sync.log /tmp/crond.log &
     crond -f -l 2 -L /tmp/crond.log
-    # echo "INFO: crond started"
-    # tail -F /tmp/crond.log /tmp/sync.log
+    echo "INFO: crond started"
   fi
 fi
 
