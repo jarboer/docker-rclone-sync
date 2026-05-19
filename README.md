@@ -75,7 +75,8 @@ Environment Variables:
  * `CRON`=`25 1 * * *`
  * `CRON_ABORT`=`0 6 * * *`
  * `FORCE_SYNC`=`0`
- * `SYNC_OPTS`=`-MPl --create-empty-src-dirs --log-level NOTICE --log-file /config/ssd-storage-report.log --transfers=4`
+ * `SYNC_OPTS`=`-MPl --create-empty-src-dirs --transfers=4 --log-level NOTICE --log-file /config/ssd-storage-report.log --exclude-from /config/ssd-storage-exclude.txt`
+   * I exclude files that don't need to be backed up or cause issues (I added an entry for all syncthing version folders which is `**/.stversions/**` as it caused errors due to some files being changed too often).
 
 Restart Policy: `No - Does not restart the container under any circumstances.`
 
